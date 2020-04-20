@@ -5,6 +5,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
 
 import routes from './routes';
+import importTransactionsConfig from './config/importTransaction';
 import AppError from './errors/AppError';
 
 import createConnection from './database';
@@ -13,6 +14,7 @@ createConnection();
 const app = express();
 
 app.use(express.json());
+app.use('/import', express.static(importTransactionsConfig.importDir));
 app.use(routes);
 
 app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
